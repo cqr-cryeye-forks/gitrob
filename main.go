@@ -224,6 +224,25 @@ func main() {
 	if sess.Stats.Status == "finished" {
 		sess.Out.Important("Loaded session file: %s\n", *sess.Options.Load)
 	} else {
+		var names []string
+
+		for _, login := range sess.Options.Logins {
+			name := core.ParseLogin(login)
+
+			if name == "" {
+				sess.Out.Important(
+					"Provided login: %v is not in the correct format. Can't get an username.\n"+
+						"Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen.\n",
+					login,
+				)
+				sess.Out.Warn("Provided login will not be processed.\n")
+				continue
+			}
+			names = append(names, name)
+		}
+
+		sess.Options.Logins = names
+
 		if len(sess.Options.Logins) == 0 {
 			sess.Out.Fatal("Please provide at least one GitHub organization or user\n")
 		}
