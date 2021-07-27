@@ -60,6 +60,14 @@ func TestParseLogin(t *testing.T) {
 			input:    "https://github.com/usern@ame/repo.git",
 			expected: "",
 		},
+		{
+			input:    "https://github.com/username",
+			expected: "username",
+		},
+		{
+			input:    "https://github.com/username/",
+			expected: "username",
+		},
 	}
 
 	for _, testCase := range testTable {

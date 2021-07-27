@@ -38,7 +38,7 @@ func TruncateString(str string, maxLength int) string {
 }
 
 func ParseLogin(login string) string {
-	str := GitHubUsernameRegex.FindString(login)
+	str := GitHubUsernameRegex.FindString(fmt.Sprintf("%s/", login))
 	if str == "" {
 		str = login
 	}
